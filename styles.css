@@ -1,0 +1,77 @@
+/* Genel Stil */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden; /* Yatay kaydırmayı kapat */
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 90%;  /* Sayfanın genişliğini tarayıcıya göre ayarla */
+    max-width: 1200px;  /* Maksimum genişlik */
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 auto;  /* Ortala */
+}
+
+h1, h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+    text-align: left;
+}
+
+input[type="text"], input[type="password"], textarea, select, input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 20px;
+    text-align: left;
+    max-height: 500px;  /* Maksimum yükseklik */
+    overflow-y: auto;  /* Dikey kaydırmayı etkinleştir */
+}
+
+#outputText {
+    white-space: pre-wrap;
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word; /* Uzun metinlerin taşmasını önle */
+}
