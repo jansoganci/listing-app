@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload and Analyze</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='main_page_styles.css') }}">
+    <script src="{{ url_for('static', filename='main_page_script.js') }}" defer></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly kütüphanesi eklendi -->
+</head>
+<body>
+    <div class="container">
+        <h1>File Uploader</h1>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="fileInput">Upload your file:</label>
+            <input type="file" id="fileInput" name="file" required>
+
+            <label for="platformSelect">Select Platform:</label>
+            <select id="platformSelect" name="platform" required>
+                <option value="" disabled selected>Select a platform</option>
+                <option value="etsy">Etsy</option>
+                <option value="amazon">Amazon</option>
+                <option value="walmart">Walmart</option>
+            </select>
+
+            <!-- GeoSelect for country selection -->
+            <label for="geoSelect">Select Region:</label>
+            <select id="geoSelect" name="geo" required>
+                <option value="Worldwide" selected>Worldwide</option>
+                <option value="US">United States</option>
+                <option value="GB">United Kingdom</option>
+                <option value="CA">Canada</option>
+                <option value="AU">Australia</option>
+                <option value="DE">Germany</option>
+                <option value="FR">France</option>
+                <option value="TR">Turkey</option>
+                <option value="IN">India</option>
+                <option value="RU">Russia</option>
+                <option value="IT">Italy</option>
+                <option value="ES">Spain</option>
+                <option value="NL">Netherlands</option>
+                <option value="UA">Ukraine</option>
+                <option value="PL">Poland</option>
+                <option value="CN">China</option>
+                <option value="ID">Indonesia</option>
+                <option value="IE">Ireland</option>
+            </select>
+
+            <label for="categorySearch">Select Category:</label>
+            <div class="dropdown">
+                <input type="text" id="categorySearch" placeholder="Search categories...">
+                <div id="categoryDropdown" class="dropdown-content">
+                    <!-- Category Start -->
+                    <select name="categories" id="categoryDropdown">
+                        <option disabled selected>Select a Category</option>
+                        <!-- Craft Supplies & Tools -->
+                        <option disabled>Craft Supplies & Tools</option>
+                        <option>Stickers</option>
+                        <option>Beads</option>
+                        <option>Sewing Supplies</option>
+                        <option>Knitting Patterns</option>
+                        <option>Embroidery Kits</option>
+                        <!-- Jewelry -->
+                        <option disabled>Jewelry</option>
+                        <option>Necklaces</option>
+                        <option>Earrings</option>
+                        <option>Bracelets</option>
+                        <option>Rings</option>
+                        <option>Anklets</option>
+                        <!-- Weddings -->
+                        <option disabled>Weddings</option>
+                        <option>Invitations</option>
+                        <option>Thank You Cards</option>
+                        <option>Wedding Favors</option>
+                        <option>Guest Books</option>
+                        <option>Cake Toppers</option>
+                        <option>Personalized Gifts</option>
+                        <option>Wedding Apparel</option>
+                        <!-- Clothing -->
+                        <option disabled>Clothing</option>
+                        <option>T-Shirts</option>
+                        <option>Hoodies</option>
+                        <option>Dresses</option>
+                        <option>Handmade Clothing</option>
+                        <option>Baby Clothing</option>
+                        <!-- Accessories -->
+                        <option disabled>Accessories</option>
+                        <option>Hair Clips</option>
+                        <option>Scarves</option>
+                        <option>Sunglasses</option>
+                        <option>Baby Accessories</option>
+                        <option>Belts</option>
+                        <!-- Bath & Beauty Products -->
+                        <option disabled>Bath & Beauty Products</option>
+                        <option>Bar Soaps</option>
+                        <option>Lotions</option>
+                        <option>Bath Bombs</option>
+                        <option>Face Masks</option>
+                        <option>Essential Oils</option>
+                        <option>Lip Balms</option>
+                        <!-- Home & Living -->
+                        <option disabled>Home & Living</option>
+                        <option>Home Decor</option>
+                        <option>Candles</option>
+                        <option>Furniture</option>
+                        <option>Kitchenware</option>
+                        <option>Wall Art</option>
+                        <!-- Paper & Party Supplies -->
+                        <option disabled>Paper & Party Supplies</option>
+                        <option>Invitations</option>
+                        <option>Placeholders</option>
+                        <option>Party Banners</option>
+                        <option>Cake Toppers</option>
+                        <option>Printables</option>
+                        <!-- Art & Collectibles -->
+                        <option disabled>Art & Collectibles</option>
+                        <option>Art Prints</option>
+                        <option>Sculptures</option>
+                        <option>Digital Art</option>
+                        <option>Posters</option>
+                        <option>Original Paintings</option>
+                        <!-- Vintage Items -->
+                        <option disabled>Vintage Items</option>
+                        <option>Vintage Jewelry</option>
+                        <option>Vintage Clothing</option>
+                        <option>Vintage Furniture</option>
+                        <option>Vintage Memorabilia</option>
+                        <option>Vintage Accessories</option>
+                        <!-- Personalized Gifts -->
+                        <option disabled>Personalized Gifts</option>
+                        <option>Custom Jewelry</option>
+                        <option>Custom Prints</option>
+                        <option>Personalized Mugs</option>
+                        <option>Engraved Items</option>
+                        <option>Custom Phone Cases</option>
+                        <!-- Zero-Waste Products -->
+                        <option disabled>Zero-Waste Products</option>
+                        <option>Reusable Bags</option>
+                        <option>Plant-Based Tools</option>
+                        <option>Cloth Towels</option>
+                        <option>Bar Soaps (Dish, Hair, Body)</option>
+                        <option>Bamboo Products</option>
+                        <!-- Pet Supplies -->
+                        <option disabled>Pet Supplies</option>
+                        <option>Custom Pet Collars</option>
+                        <option>Pet Clothing</option>
+                        <option>Pet Beds</option>
+                        <option>Pet Toys</option>
+                        <option>Leashes</option>
+                        <!-- Toys & Entertainment -->
+                        <option disabled>Toys & Entertainment</option>
+                        <option>Wooden Toys</option>
+                        <option>Educational Games</option>
+                        <option>Board Games</option>
+                        <option>Puzzles</option>
+                        <option>Stuffed Animals</option>
+                        <!-- Bags & Purses -->
+                        <option disabled>Bags & Purses</option>
+                        <option>Handmade Totes</option>
+                        <option>Backpacks</option>
+                        <option>Crossbody Bags</option>
+                        <option>Laptop Bags</option>
+                        <option>Clutches</option>
+                        <!-- Books -->
+                        <option disabled>Books</option>
+                        <option>Fiction</option>
+                        <option>Non-fiction</option>
+                        <option>Art Books</option>
+                        <option>Children's Books</option>
+                        <option>Cookbooks</option>
+                        <option>Educational Books</option>
+                        <!-- Digital Content -->
+                        <option disabled>Digital Content</option>
+                        <option>E-book</option>
+                        <option>PDF Study Notes</option>
+                        <option>Digital Art Book</option>
+                    </select>
+                    <!-- Category End -->
+                </div>
+            </div>
+
+            <label for="additionalInfo">Additional Information:</label>
+            <textarea id="additionalInfo" name="additionalInfo" placeholder="Enter additional information here..."></textarea>
+
+            <!-- Hidden input field: OpenAI API key -->
+            <input type="hidden" id="apiKey" name="apiKey">
+            <button type="submit">Upload and Analyze</button>
+        </form>
+
+        <div id="result">
+            <h2>Analysis Result:</h2>
+            <p id="outputTitle">Title: </p>
+            <p id="outputDescription">Description: </p>
+            <p id="outputAltText">Alt Text: </p>
+            <p id="outputKeywords">Keywords: </p>
+        </div>
+
+        <!-- Keyword Analysis Button -->
+        <div id="keywordAnalysisSection" style="display: none;">
+            <button id="keywordAnalysisBtn">Keyword Analysis</button>
+        </div>
+
+        <!-- Visualization Area -->
+        <div id="trendsVisualization">
+            <h2>Google Trends Data:</h2>
+            <div id="trendChart"></div> <!-- Plotly grafiği buraya yerleşecek -->
+        </div>
+    </div>
+
+    <!-- JavaScript Kodları -->
+    <script>
+        document.getElementById("uploadForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+
+            fetch("/upload", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // AI tarafından üretilen başlık, açıklama, alt metin ve anahtar kelimeleri göster
+                document.getElementById("outputTitle").textContent = `Title: ${data.title}`;
+                document.getElementById("outputDescription").textContent = `Description: ${data.description}`;
+                document.getElementById("outputAltText").textContent = `Alt Text: ${data.alt_text}`;
+                document.getElementById("outputKeywords").textContent = `Keywords: ${data.keywords}`;
+
+                // Keyword Analysis butonunu görünür yap
+                document.getElementById("keywordAnalysisSection").style.display = "block";
+            })
+            .catch(error => console.error("Error:", error));
+        });
+
+        // Keyword Analysis butonuna tıklanınca Google Trends analizini başlat
+        document.getElementById("keywordAnalysisBtn").addEventListener("click", function() {
+            const keywords = document.getElementById("outputKeywords").innerText;
+            const formData = new FormData();
+            formData.append("keyword", keywords);
+            formData.append("geo", document.getElementById("geoSelect").value);
+
+            fetch("/analyze_keyword", {
+                method: "POST",
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Google Trends verilerini göster
+                const chartData = JSON.parse(data.trend_data);
+                const dates = Object.keys(chartData);
+                const values = Object.values(chartData);
+
+                const trace = {
+                    x: dates,
+                    y: values,
+                    mode: 'lines',
+                    name: 'Trend Over Time'
+                };
+
+                const layout = {
+                    title: 'Google Trends Over Time',
+                    xaxis: { title: 'Date' },
+                    yaxis: { title: 'Interest Over Time' }
+                };
+
+                Plotly.newPlot('trendChart', [trace], layout);
+            })
+            .catch(error => console.error("Error:", error));
+        });
+    </script>
+</body>
+</html>
