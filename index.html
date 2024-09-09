@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+</head>
+<body>
+    <div class="profile-container">
+        <h2>User Profile</h2>
+        <form id="profileForm">
+            <label for="apiKey">API Key:</label>
+            <div style="display: flex; align-items: center;">
+                <input type="password" id="apiKey" name="apiKey" placeholder="Enter your API Key" required>
+                <button type="button" id="toggleApiKey" style="margin-left: 10px;">Show</button>
+            </div>
+            <button type="button" id="saveApiKey">Save API Key</button>
+
+            <h3>Platform Listing Criteria</h3>
+            
+            <label for="platformSelect">Select Platform:</label>
+            <select id="platformSelect" name="platformSelect" required>
+                <option value="" disabled selected>Select a platform</option>
+                <option value="etsy">Etsy</option>
+                <option value="amazon">Amazon</option>
+                <option value="walmart">Walmart</option>
+            </select>
+
+            <div id="criteriaContainer" style="display: none;">
+                <label for="platformCriteria">Enter Criteria:</label>
+                <textarea id="platformCriteria" name="platformCriteria" placeholder="Enter listing criteria"></textarea>
+                <button type="button" id="saveCriteria">Save</button>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
