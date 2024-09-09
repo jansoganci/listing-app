@@ -1,0 +1,171 @@
+/* Genel Stil */
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    text-align: center;
+    margin: 0 auto;
+}
+
+h1, h2, h3 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #555;
+    font-weight: bold;
+    text-align: left;
+}
+
+input[type="text"], input[type="password"], textarea, select, input[type="file"] {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#result {
+    margin-top: 20px;
+    text-align: left;
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+#outputText {
+    white-space: pre-wrap;
+    text-align: left;
+    background-color: #f4f4f4;
+    padding: 10px;
+    border-radius: 5px;
+    word-wrap: break-word;
+}
+
+/* Arama ve dropdown menü stili */
+.dropdown {
+    position: relative;
+    width: 100%;
+}
+
+#categorySearch {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+/* Dropdown menü stili */
+.dropdown-content {
+    position: absolute;
+    width: 100%;
+    max-height: 300px; /* Yüksekliği artırdım */
+    overflow-y: auto;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    z-index: 100;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-content div {
+    padding: 12px 16px; /* Daha rahat tıklanabilir alan için padding artırıldı */
+    cursor: pointer;
+}
+
+.dropdown-content div:hover {
+    background-color: #f1f1f1;
+}
+
+/* Kategoriler arası farkı göstermek için grup başlıkları */
+.dropdown-content option[disabled] {
+    font-weight: bold;
+    color: #333;
+    background-color: #f9f9f9;
+    cursor: default;
+}
+
+/* Dropdown kapanışı sırasında animasyon */
+.dropdown-content {
+    transition: max-height 0.3s ease;
+}
+
+.dropdown-content.hidden {
+    max-height: 0;
+    overflow: hidden;
+}
+
+/* Keyword Analysis Butonu */
+#keywordAnalysisBtn {
+    margin-top: 20px;
+    width: 100%;
+    padding: 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#keywordAnalysisBtn:hover {
+    background-color: #218838;
+}
+
+/* Anahtar Kelime Analiz Sonuçları */
+#keywordResult {
+    margin-top: 20px;
+    background-color: #f4f4f4;
+    padding: 20px;
+    border-radius: 5px;
+    max-height: 500px;
+    overflow-y: auto;
+    border: 1px solid #ddd;
+    white-space: pre-wrap;
+}
+
+#keywordResult h3 {
+    color: #333;
+    margin-bottom: 10px;
+}
+
+#keywordResult p {
+    margin: 5px 0;
+    font-size: 14px;
+}
