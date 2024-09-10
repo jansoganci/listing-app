@@ -17,14 +17,15 @@ app = Flask(__name__, static_folder='static')
 
 # Google Cloud Vision istemcisini oluşturma
 def create_vision_client():
-    credentials_info = os.getenv("GOOGLE_CREDENTIALS")
+    credentials_info = json.loads(os.environ.get('GOOGLE_CREDENTIALS', '{}'))
     if credentials_info:
-        credentials, project = google.auth.load_credentials_from_info(json.loads(credentials_info))
+        credentials, project = google.auth.load_credentials_from_dict(credentials_info)  # load_credentials_from_dict kullanılıyor
         client = vision.ImageAnnotatorClient(credentials=credentials)
         return client
     else:
         raise EnvironmentError("GOOGLE_CREDENTIALS environment variable not set.")
 
+# Google Cloud Vision istemcisini oluşturma
 client = create_vision_client()
 
 # Görsel dosyasını analiz etme fonksiyonu
