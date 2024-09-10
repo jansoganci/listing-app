@@ -11,3 +11,4 @@ plotly==5.3.1
 setuptools==74.1.2
 wheel==0.44.0
 werkzeug==2.3.7
+pytrends==4.7.3  # En güncel vers.
