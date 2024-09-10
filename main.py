@@ -137,8 +137,8 @@ def upload_file():
             app.logger.error(f"An error occurred: {str(e)}")
             return jsonify({"error": f"An unexpected error occurred: {str(e)}"}), 500
     else:
-        categories = load_data_from_txt('categories.txt')
-        countries = load_data_from_txt('countries.txt')
+        categories = load_data_from_txt('category.txt')  # Kategoriler category.txt dosyasından alınacak
+        countries = load_data_from_txt('countries.txt')  # Ülkeler countries.txt dosyasından alınacak
         return render_template('upload.html', categories=categories, countries=countries)
 
 if __name__ == "__main__":
