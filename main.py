@@ -95,10 +95,22 @@ def load_data_from_txt(file_name):
     with open(file_name, 'r') as file:
         return [line.strip() for line in file.readlines()]
 
-# Ana sayfa
+# Ana sayfa (upload.html)
 @app.route('/')
-def serve_home():
-    return render_template('index.html')
+def home():
+    categories = load_data_from_txt('category.txt')  # Kategoriler category.txt dosyasından alınacak
+    countries = load_data_from_txt('countries.txt')  # Ülkeler countries.txt dosyasından alınacak
+    return render_template('upload.html', categories=categories, countries=countries)  # upload.html ana sayfa olacak
+
+# Profil Sayfası (index.html dosyasına yönlendirilmiş)
+@app.route('/profile')
+def profile():
+    return render_template('index.html')  # index.html profil sayfası olarak kalacak
+
+# Kullanıcı Oluşturma Sayfası (profile.html)
+@app.route('/create_profile')
+def create_profile():
+    return render_template('profile.html')  # profile.html kullanıcı oluşturma ekranı
 
 # Upload sayfası
 @app.route('/upload', methods=['GET', 'POST'])
