@@ -5,17 +5,114 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Upload and Analyze</title>
     <style>
-        /* Stil ayarları burada */
+        /* Genel Stil */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header için stil */
+        header {
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="file"], select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result, #trendsVisualization {
+            margin-top: 20px;
+        }
+
+        #result p {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #keywordAnalysisSection {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
+    <!-- Statik Header -->
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('upload') }}">Ana Sayfa</a></li>
-                <li><a href="{{ url_for('index') }}">Profil</a></li>
+                <li><a href="/">Ana Sayfa</a></li>
+                <li><a href="/profile">Profil</a></li>
             </ul>
         </nav>
     </header>
@@ -38,22 +135,16 @@
             <label for="geoSelect">Select Region:</label>
             <select id="geoSelect" name="geo" required>
                 {% for country in countries %}
-                <option value="{{ country }}">{{ country }}</option>
+                    <option value="{{ country }}">{{ country }}</option>
                 {% endfor %}
             </select>
 
-            <label for="categorySearch">Select Category:</label>
-            <div class="dropdown">
-                <input type="text" id="categorySearch" placeholder="Search categories...">
-                <div id="categoryDropdown" class="dropdown-content">
-                    <select name="categories" id="categoryDropdown">
-                        <option disabled selected>Select a Category</option>
-                        {% for category in categories %}
-                        <option>{{ category }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-            </div>
+            <label for="categorySelect">Select Category:</label>
+            <select id="categorySelect" name="category" required>
+                {% for category in categories %}
+                    <option value="{{ category }}">{{ category }}</option>
+                {% endfor %}
+            </select>
 
             <label for="additionalInfo">Additional Information:</label>
             <textarea id="additionalInfo" name="additionalInfo" placeholder="Enter additional information here..."></textarea>
@@ -68,6 +159,15 @@
             <p id="outputDescription">Description: </p>
             <p id="outputAltText">Alt Text: </p>
             <p id="outputKeywords">Keywords: </p>
+        </div>
+
+        <div id="keywordAnalysisSection" style="display: none;">
+            <button id="keywordAnalysisBtn">Keyword Analysis</button>
+        </div>
+
+        <div id="trendsVisualization">
+            <h2>Google Trends Data:</h2>
+            <div id="trendChart"></div>
         </div>
     </div>
 
