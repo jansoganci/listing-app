@@ -36,6 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Platform seçildiğinde, kriterleri localStorage'dan al ve göster
     platformSelect.addEventListener('change', function() {
         const platform = platformSelect.value;
         if (platform) {
@@ -47,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Kriterleri kaydet
     saveCriteriaButton.addEventListener('click', function() {
         const platform = platformSelect.value;
         const criteria = platformCriteria.value;
