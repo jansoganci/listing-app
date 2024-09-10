@@ -162,5 +162,8 @@ def upload_file():
         # GET isteği yapıldığında upload.html sayfasını render et
         return render_template('upload.html')
 
+import os
+
 if __name__ == "__main__":
-    app.run(debug=True, port=3000)
+    port = int(os.environ.get("PORT", 5000))  # Heroku'nun sağlayacağı PORT değişkenini kullan
+    app.run(debug=True, host="0.0.0.0", port=port)
