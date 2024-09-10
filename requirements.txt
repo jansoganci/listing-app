@@ -5,14 +5,14 @@ python-docx==0.8.11
 Pillow==9.2.0
 pytesseract==0.3.10
 openai==0.27.2
-pandas==1.5.3  # Pandas'ın güncel sürümü
-numpy==1.21.6  # Pandas ile uyumlu Numpy sürümü
+pandas==1.5.3
+numpy==1.21.6
 plotly==5.3.1
 setuptools==74.1.2
 wheel==0.44.0
 werkzeug==2.3.7
-pytrends==4.7.3  # En güncel vers.
+pytrends==4.7.3
 matplotlib==3.4.3
-Flask-SQLAlchemy==2.5.1  # Veritabanı işlemleri için Flask-SQLAlchemy
-SQLAlchemy==1.4.47  # SQLAlchemy'nin güncel versiyonu
-psycopg2-binary==2.9.9  # PostgreSQL için gerekli olan binary paket
+Flask-SQLAlchemy==2.5.1
+SQLAlchemy==1.4.47
+psycopg2-binary==2.9.6  # psycopg2 yerine bunu kullanıyoruz
