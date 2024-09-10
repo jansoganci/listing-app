@@ -13,3 +13,5 @@ wheel==0.44.0
 werkzeug==2.3.7
 pytrends==4.7.3  # En güncel vers.
 matplotlib==3.4.3
+Flask-SQLAlchemy==2.5.1  # Veritabanı işlemleri için Flask-SQLAlchemy
+SQLAlchemy==2.0.0  # SQLAlchemy'nin güncel versiyonu
