@@ -4,11 +4,117 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-    <script src="{{ url_for('static', filename='script.js') }}" defer></script>
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 600px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        h2, h3 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        input[type="text"], input[type="password"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #criteriaContainer {
+            margin-top: 20px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const apiKeyInput = document.getElementById('apiKey');
+            const toggleApiKeyButton = document.getElementById('toggleApiKey');
+            const saveApiKeyButton = document.getElementById('saveApiKey');
+            const platformSelect = document.getElementById('platformSelect');
+            const criteriaContainer = document.getElementById('criteriaContainer');
+            const saveCriteriaButton = document.getElementById('saveCriteria');
+
+            // API Key'i şifreli göster/gizle
+            toggleApiKeyButton.addEventListener('click', function() {
+                if (apiKeyInput.type === 'password') {
+                    apiKeyInput.type = 'text';
+                    toggleApiKeyButton.textContent = 'Hide';
+                } else {
+                    apiKeyInput.type = 'password';
+                    toggleApiKeyButton.textContent = 'Show';
+                }
+            });
+
+            // API Key'i kaydet
+            saveApiKeyButton.addEventListener('click', function() {
+                const apiKey = apiKeyInput.value;
+                if (apiKey) {
+                    alert('API Key saved: ' + apiKey); // Bunu backend'e gönderebilirsin
+                }
+            });
+
+            // Platform seçildiğinde kriterler alanını göster
+            platformSelect.addEventListener('change', function() {
+                criteriaContainer.style.display = 'block';
+            });
+
+            // Kriterleri kaydet
+            saveCriteriaButton.addEventListener('click', function() {
+                const criteria = document.getElementById('platformCriteria').value;
+                if (criteria) {
+                    alert('Criteria saved: ' + criteria); // Bunu backend'e gönderebilirsin
+                }
+            });
+        });
+    </script>
 </head>
 <body>
-    <div class="profile-container">
+    <div class="profile-container container">
         <h2>User Profile</h2>
         <form id="profileForm">
             <label for="apiKey">API Key:</label>
