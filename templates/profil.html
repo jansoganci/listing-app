@@ -24,6 +24,9 @@
             width: 100%;
             background-color: #333;
             padding: 10px 0;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
         }
 
         nav ul {
@@ -58,6 +61,7 @@
             max-width: 500px;
             box-sizing: border-box;
             text-align: center;
+            margin-top: 100px; /* Header'ın altında yer açmak için */
         }
 
         h2 {
@@ -112,12 +116,12 @@
     </style>
 </head>
 <body>
-    <!-- Upper Header (Ana Sayfa ve Profil linkleri) -->
+    <!-- Statik Header -->
     <header>
         <nav>
             <ul>
-                <li><a href="{{ url_for('upload') }}">Ana Sayfa</a></li>
-                <li><a href="{{ url_for('index') }}">Profil</a></li>
+                <li><a href="/">Ana Sayfa</a></li>
+                <li><a href="/profile">Profil</a></li>
             </ul>
         </nav>
     </header>
@@ -138,7 +142,7 @@
             <button type="submit">Hesap Oluştur</button>
         </form>
 
-        <p>Zaten bir hesabınız var mı? <a href="{{ url_for('index') }}">Giriş Yap</a></p>
+        <p>Zaten bir hesabınız var mı? <a href="/profile">Giriş Yap</a></p>
         <p>Şifrenizi mi unuttunuz? <a href="#">Şifremi Unuttum</a></p>
     </div>
 </body>
