@@ -10,8 +10,25 @@ from docx import Document
 from PIL import Image
 import pytesseract
 import pandas as pd
+from flask_sqlalchemy import SQLAlchemy  # SQLAlchemy eklendi
 
 app = Flask(__name__, static_folder='static')
+
+# DATABASE_URL, Heroku'daki Config Vars'tan alınacak
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Veritabanı işlemleri için SQLAlchemy örneği
+db = SQLAlchemy(app)
+
+# User modeli, API Key ve email adresini saklayacak
+class User(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(120), unique=True, nullable=False)
+    api_key = db.Column(db.String(255), nullable=False)
+
+    def __repr__(self):
+        return f'<User {self.email}>'
 
 # Google Cloud Vision istemcisini oluşturma
 def create_vision_client():
@@ -108,8 +125,16 @@ def profile():
     return render_template('index.html')  # index.html profil sayfası olarak kalacak
 
 # Kullanıcı Oluşturma Sayfası (profile.html)
-@app.route('/create_profile')
+@app.route('/create_profile', methods=['POST', 'GET'])
 def create_profile():
+    if request.method == 'POST':
+        email = request.form['email']
+        api_key = request.form['apiKey']
+        # Yeni kullanıcıyı veritabanına ekle
+        new_user = User(email=email, api_key=api_key)
+        db.session.add(new_user)
+        db.session.commit()
+        return jsonify({'message': 'User created successfully!'})
     return render_template('profile.html')  # profile.html kullanıcı oluşturma ekranı
 
 # Upload sayfası
@@ -154,5 +179,9 @@ def upload_file():
         return render_template('upload.html', categories=categories, countries=countries)
 
 if __name__ == "__main__":
+    # Veritabanı tablolarını oluştur
+    with app.app_context():
+        db.create_all()
+    
     port = int(os.environ.get("PORT", 5000))  # Heroku'nun sağlayacağı PORT değişkenini kullan
     app.run(debug=True, host="0.0.0.0", port=port)
