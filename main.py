@@ -1,5 +1,8 @@
 from flask import Flask, render_template, request, jsonify
 from google.cloud import vision
+import google.auth
+import json
+import os
 import io
 import openai
 from PyPDF2 import PdfReader
@@ -13,7 +16,16 @@ import pandas as pd
 app = Flask(__name__, static_folder='static')
 
 # Google Cloud Vision istemcisini oluşturma
-client = vision.ImageAnnotatorClient()
+def create_vision_client():
+    credentials_info = os.getenv("GOOGLE_CREDENTIALS")
+    if credentials_info:
+        credentials, project = google.auth.load_credentials_from_info(json.loads(credentials_info))
+        client = vision.ImageAnnotatorClient(credentials=credentials)
+        return client
+    else:
+        raise EnvironmentError("GOOGLE_CREDENTIALS environment variable not set.")
+
+client = create_vision_client()
 
 # Görsel dosyasını analiz etme fonksiyonu
 def analyze_image_with_vision(image_file):
