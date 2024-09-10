@@ -15,3 +15,4 @@ pytrends==4.7.3  # En güncel vers.
 matplotlib==3.4.3
 Flask-SQLAlchemy==2.5.1  # Veritabanı işlemleri için Flask-SQLAlchemy
 SQLAlchemy==1.4.47  # SQLAlchemy'nin güncel versiyonu
+psycopg2-binary==2.9.9  # PostgreSQL için gerekli olan binary paket
