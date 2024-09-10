@@ -1,0 +1,18 @@
+Worldwide
+US,United States
+GB,United Kingdom
+CA,Canada
+AU,Australia
+DE,Germany
+FR,France
+TR,Turkey
+IN,India
+RU,Russia
+IT,Italy
+ES,Spain
+NL,Netherlands
+UA,Ukraine
+PL,Poland
+CN,China
+ID,Indonesia
+IE,Ireland
