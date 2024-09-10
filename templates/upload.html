@@ -7,8 +7,120 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='main_page_styles.css') }}">
     <script src="{{ url_for('static', filename='main_page_script.js') }}" defer></script>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script> <!-- Plotly kütüphanesi eklendi -->
+    <style>
+        /* Genel Stil */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header için stil */
+        header {
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+        }
+
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav ul li {
+            margin: 0 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        nav ul li a:hover {
+            text-decoration: underline;
+        }
+
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 900px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        label {
+            display: block;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: bold;
+        }
+
+        input[type="file"], select, input[type="text"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #result, #trendsVisualization {
+            margin-top: 20px;
+        }
+
+        #result p {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        #keywordAnalysisSection {
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
+
+    <!-- Header -->
+    <header>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('upload') }}">Ana Sayfa</a></li>
+                <li><a href="{{ url_for('index') }}">Profil</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Upload Sayfası İçeriği -->
     <div class="container">
         <h1>File Uploader</h1>
         <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
@@ -23,7 +135,6 @@
                 <option value="walmart">Walmart</option>
             </select>
 
-            <!-- GeoSelect for country selection -->
             <label for="geoSelect">Select Region:</label>
             <select id="geoSelect" name="geo" required>
                 <option value="Worldwide" selected>Worldwide</option>
@@ -182,7 +293,6 @@
             <label for="additionalInfo">Additional Information:</label>
             <textarea id="additionalInfo" name="additionalInfo" placeholder="Enter additional information here..."></textarea>
 
-            <!-- Hidden input field: OpenAI API key -->
             <input type="hidden" id="apiKey" name="apiKey">
             <button type="submit">Upload and Analyze</button>
         </form>
@@ -195,19 +305,16 @@
             <p id="outputKeywords">Keywords: </p>
         </div>
 
-        <!-- Keyword Analysis Button -->
         <div id="keywordAnalysisSection" style="display: none;">
             <button id="keywordAnalysisBtn">Keyword Analysis</button>
         </div>
 
-        <!-- Visualization Area -->
         <div id="trendsVisualization">
             <h2>Google Trends Data:</h2>
-            <div id="trendChart"></div> <!-- Plotly grafiği buraya yerleşecek -->
+            <div id="trendChart"></div>
         </div>
     </div>
 
-    <!-- JavaScript Kodları -->
     <script>
         document.getElementById("uploadForm").addEventListener("submit", function(event) {
             event.preventDefault();
@@ -219,19 +326,16 @@
             })
             .then(response => response.json())
             .then(data => {
-                // AI tarafından üretilen başlık, açıklama, alt metin ve anahtar kelimeleri göster
                 document.getElementById("outputTitle").textContent = `Title: ${data.title}`;
                 document.getElementById("outputDescription").textContent = `Description: ${data.description}`;
                 document.getElementById("outputAltText").textContent = `Alt Text: ${data.alt_text}`;
                 document.getElementById("outputKeywords").textContent = `Keywords: ${data.keywords}`;
 
-                // Keyword Analysis butonunu görünür yap
                 document.getElementById("keywordAnalysisSection").style.display = "block";
             })
             .catch(error => console.error("Error:", error));
         });
 
-        // Keyword Analysis butonuna tıklanınca Google Trends analizini başlat
         document.getElementById("keywordAnalysisBtn").addEventListener("click", function() {
             const keywords = document.getElementById("outputKeywords").innerText;
             const formData = new FormData();
@@ -244,7 +348,6 @@
             })
             .then(response => response.json())
             .then(data => {
-                // Google Trends verilerini göster
                 const chartData = JSON.parse(data.trend_data);
                 const dates = Object.keys(chartData);
                 const values = Object.values(chartData);
