@@ -161,6 +161,9 @@ def submit_apikey():
     criteria = request.form['criteria']
     user_id = request.form['user_id']  # Kullanıcının ID'si bu formdan gelecek
 
+    # Verilerin doğru geldiğini kontrol etmek için print ekliyoruz.
+    print(f"API Key: {api_key}, Criteria: {criteria}, User ID: {user_id}")
+
     # API Key ve kriter verilerini kaydet
     new_apikey = ApiKey(api_key=api_key, criteria=criteria, user_id=user_id)
     db.session.add(new_apikey)
