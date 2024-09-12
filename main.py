@@ -24,11 +24,24 @@ db = SQLAlchemy(app)
 # User modeli, API Key ve email adresini saklayacak
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    first_name = db.Column(db.String(50), nullable=False)  # Ad eklendi
+    last_name = db.Column(db.String(50), nullable=False)   # Soyad eklendi
     email = db.Column(db.String(120), unique=True, nullable=False)
-    api_key = db.Column(db.String(255), nullable=False)
+    password = db.Column(db.String(255), nullable=False)   # Şifre eklendi
 
     def __repr__(self):
         return f'<User {self.email}>'
+
+# ApiKey modeli, User tablosuyla ilişkilendirilmiş
+class ApiKey(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    api_key = db.Column(db.String(255), nullable=False)
+    criteria = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    user = db.relationship('User', backref=db.backref('api_keys', lazy=True))
+
+    def __repr__(self):
+        return f'<ApiKey {self.api_key}>'
 
 # Google Cloud Vision istemcisini oluşturma
 def create_vision_client():
@@ -128,14 +141,32 @@ def profile():
 @app.route('/create_profile', methods=['POST', 'GET'])
 def create_profile():
     if request.method == 'POST':
+        first_name = request.form['first_name']  # Ad eklendi
+        last_name = request.form['last_name']    # Soyad eklendi
         email = request.form['email']
+        password = request.form['password']  # Şifre eklendi
         api_key = request.form['apiKey']
+        
         # Yeni kullanıcıyı veritabanına ekle
-        new_user = User(email=email, api_key=api_key)
+        new_user = User(first_name=first_name, last_name=last_name, email=email, password=password, api_key=api_key)
         db.session.add(new_user)
         db.session.commit()
         return jsonify({'message': 'User created successfully!'})
     return render_template('profile.html')  # profile.html kullanıcı oluşturma ekranı
+
+# API Key ve kriter kaydetme rotası
+@app.route('/submit_apikey', methods=['POST'])
+def submit_apikey():
+    api_key = request.form['apiKey']
+    criteria = request.form['criteria']
+    user_id = request.form['user_id']  # Kullanıcının ID'si bu formdan gelecek
+
+    # API Key ve kriter verilerini kaydet
+    new_apikey = ApiKey(api_key=api_key, criteria=criteria, user_id=user_id)
+    db.session.add(new_apikey)
+    db.session.commit()
+
+    return jsonify({'message': 'API Key and criteria saved successfully!'})
 
 # Upload sayfası
 @app.route('/upload', methods=['GET', 'POST'])
